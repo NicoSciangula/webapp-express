@@ -9,3 +9,5 @@ router.get("/", index);
 
 // * SHOW
 router.get("/:id", show);
+
+module.exports = router;
