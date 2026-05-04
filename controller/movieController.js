@@ -10,7 +10,25 @@ function index(req, res) {
 }
 
 function show(req, res) {
-  res.send(`Il film che hai selezionato è il ${req.params.id}`);
+  const {id} = req.params;
+  const movieSql = "SELECT * FROM movies  WHERE id = ?";
+
+  const reviewSql = "SELECT name, vote, text FROM reviews WHERE movie_id = ?";
+
+  connection.query(movieSql, [id], (err, movieResults) => {
+    if (err) return res.status(500).json({error: "Database query failed"});
+    if (movieResults.length === 0)
+      return res.status(404).json({error: "Movie not found"});
+
+    const movie = movieResults[0];
+
+    connection.query(reviewSql, [id], (err, reviewResults) => {
+      if (err) return res.status(500).json({error: "Database query failed"});
+
+      movie.review = reviewResults;
+      res.json(movie);
+    });
+  });
 }
 
 module.exports = {index, show};
