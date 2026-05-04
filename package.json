@@ -1,0 +1,17 @@
+{
+  "name": "webapp-express",
+  "version": "1.0.0",
+  "description": "webApp_BE",
+  "license": "ISC",
+  "author": "Me",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "watch": "node --watch app.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mysql2": "^3.22.3"
+  }
+}
