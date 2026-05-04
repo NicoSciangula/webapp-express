@@ -5,6 +5,10 @@ const port = 3000;
 // * Importato il router
 const movieRouter = require("./router/movieRouter");
 
+// * Middleware custom per errori
+const errorsHandler = require("./middleware/errorsHandler");
+const notFound = require("./middleware/notFound");
+
 app.use(express.json());
 
 app.use("/api/movies", movieRouter);
@@ -12,6 +16,9 @@ app.use("/api/movies", movieRouter);
 app.get("/", (req, res) => {
   res.send("Benvenuto sul mio sito!");
 });
+
+app.use(errorsHandler);
+app.use(notFound);
 
 app.listen(port, () => {
   console.log("Il mio server!");
