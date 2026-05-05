@@ -17,6 +17,12 @@ const movieRouter = require("./router/movieRouter");
 const errorsHandler = require("./middleware/errorsHandler");
 const notFound = require("./middleware/notFound");
 
+const imagePath = require("./middleware/imagePath");
+
+app.use(imagePath);
+
+app.use(express.static("public"));
+
 app.use(express.json());
 
 app.use("/api/movies", movieRouter);
