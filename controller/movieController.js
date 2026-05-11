@@ -1,3 +1,4 @@
+const {Connection} = require("mysql2");
 const connection = require("./../data/db");
 
 // * INDEX
@@ -58,4 +59,24 @@ function storeReview(req, res) {
   });
 }
 
-module.exports = {index, show, storeReview};
+// * STORE movie
+function storeMovie(req, res) {
+  const {title, director, genre, abstract} = req.body;
+  const imageName = `${req.file.filename}`;
+
+  const sql =
+    "INSERT INTO movies (title, director, genre, abstract, image) VALUES (?, ?, ?, ?, ?)";
+
+  connection.query(
+    sql,
+    [title, director, genre, abstract, imageName],
+    (err, result) => {
+      if (err) return res.status(500).json({error: "Database query failed"});
+      res.status(201).json({
+        message: "Movie successfully added",
+      });
+    },
+  );
+}
+
+module.exports = {index, show, storeReview, storeMovie};
